@@ -1,0 +1,86 @@
+/* Animated emoji pulse */
+@keyframes emojiPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+.pulse-emoji {
+  display: inline-block;
+  animation: emojiPulse 2s ease-in-out infinite;
+}
+
+/* Mobile responsive styles for VidyaSutra landing page */
+
+@media (max-width: 768px) {
+  nav {
+    padding: 12px 16px !important;
+  }
+
+  h1 {
+    font-size: 38px !important;
+    letter-spacing: 1px !important;
+  }
+
+  h2 {
+    font-size: 24px !important;
+  }
+
+  /* Top bar — stack on mobile */
+  div[style*="borderBottom: 1px solid rgba(212,168,67,0.08)"] {
+    flex-direction: column !important;
+    gap: 4px !important;
+    padding: 8px 16px !important;
+    text-align: center !important;
+  }
+
+  /* Grids — single column */
+  div[style*="gridTemplateColumns"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  /* Pricing highlight — no scale on mobile */
+  div[style*="scale(1.03)"] {
+    transform: none !important;
+  }
+
+  /* Hero content padding */
+  div[style*="maxWidth: 1200"] {
+    padding: 20px 16px !important;
+  }
+
+  /* Footer grid */
+  footer div[style*="gridTemplateColumns"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+
+  /* Hero coin smaller */
+  img[alt="VidyaSutra"] {
+    width: 72px !important;
+    height: 72px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 32px !important;
+    letter-spacing: 0px !important;
+  }
+
+  h2 {
+    font-size: 20px !important;
+  }
+
+  p {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+
+  nav a {
+    padding: 8px 16px !important;
+    font-size: 12px !important;
+  }
+}

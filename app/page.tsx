@@ -214,7 +214,7 @@ const styles: Record<string, React.CSSProperties> = {
   hero: { minHeight: '90vh', display: 'flex', flexDirection: 'column', backgroundImage: 'linear-gradient(to bottom, rgba(26,14,5,0.7) 0%, rgba(26,14,5,0.85) 50%, #1A0E05 100%), url(/kautilya-hero.png)', backgroundSize: 'cover', backgroundPosition: 'center top' },
   heroContent: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px 20px 60px', maxWidth: 1200, margin: '0 auto', width: '100%' },
   heroTextSection: { maxWidth: 750, textAlign: 'center' },
-  heroCoin: { width: 180, height: 180, borderRadius: 90, objectFit: 'cover', marginBottom: 24, boxShadow: '0 0 60px rgba(212,168,67,0.3)' },
+  heroCoin: { width: 180, height: 180, borderRadius: 90, objectFit: 'cover', marginBottom: 24 },
   heroSanskrit: { fontSize: 18, color: 'rgba(212,168,67,0.3)', letterSpacing: 8, fontFamily: "'Cormorant Garamond', serif", marginBottom: 8 },
   heroTitle: { fontSize: 68, fontWeight: 700, lineHeight: 1.05, color: '#D4A843', fontFamily: "'Cormorant Garamond', serif", margin: '0 0 8px', letterSpacing: 3, textShadow: '0 0 40px rgba(212,168,67,0.15)' },
   heroSwash: { width: 80, height: 2, background: 'linear-gradient(90deg, transparent, #D4A843, transparent)', margin: '16px auto 20px' },

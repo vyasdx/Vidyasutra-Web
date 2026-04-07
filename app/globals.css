@@ -1,3 +1,15 @@
+/* Global mobile fix — prevent horizontal overflow */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 /* Animated emoji pulse */
 @keyframes emojiPulse {
   0%, 100% { transform: scale(1); }
@@ -50,6 +62,37 @@
     padding: 20px 16px !important;
   }
 
+  /* All sections — proper padding */
+  section {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Container max width */
+  div[style*="maxWidth: 1100"] {
+    padding: 0 12px !important;
+    max-width: 100% !important;
+  }
+
+  /* Hero section — no overflow */
+  section[style*="minHeight: 90vh"] {
+    background-size: cover !important;
+    background-position: center !important;
+    overflow: hidden !important;
+  }
+
+  /* CTA buttons — full width on mobile */
+  div[style*="gap: 16px"][style*="justifyContent: center"] {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  div[style*="gap: 16px"][style*="justifyContent: center"] a {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
   /* Footer grid */
   footer div[style*="gridTemplateColumns"] {
     display: flex !important;
@@ -57,10 +100,17 @@
     gap: 24px !important;
   }
 
-  /* Hero coin smaller */
+  /* Hero coin — slightly smaller on mobile */
   img[alt="VidyaSutra"] {
-    width: 72px !important;
-    height: 72px !important;
+    width: 120px !important;
+    height: 120px !important;
+  }
+
+  /* Top bar right side */
+  div[style*="gap: 24px"] {
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
   }
 }
 
@@ -79,8 +129,31 @@
     line-height: 1.6 !important;
   }
 
+  nav {
+    padding: 10px 12px !important;
+  }
+
   nav a {
     padding: 8px 16px !important;
     font-size: 12px !important;
+  }
+
+  /* Tighter padding on small screens */
+  section {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  /* Cards — no horizontal overflow */
+  div[style*="padding: 28"] {
+    padding: 16px !important;
+  }
+
+  div[style*="padding: 24"] {
+    padding: 14px !important;
+  }
+
+  div[style*="padding: 20"] {
+    padding: 12px !important;
   }
 }

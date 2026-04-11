@@ -2,10 +2,131 @@
  * Created by: Vedavyas Vayalpadu, NiyamKavach AI Labs Private Limited, Bengaluru
  * Co-developed by: Vedavyas and Claude Opus 4.6
  */
+'use client';
+
+import { useState } from 'react';
 
 const PLAY_STORE_URL = '#';
+const SUPABASE_URL = 'https://dvxgukuvtfbhqwuphwwm.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2eGd1a3V2dGZiaHF3dXBod3dtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxNTM1NzcsImV4cCI6MjA1ODcyOTU3N30.n1C7W7TYgN2cFPsmFDffD3QbTCibFq2vt6kzEEgKuLo';
+
+function WaitlistModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [phone, setPhone] = useState('');
+  const [name, setName] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  if (!open) return null;
+
+  const handleSubmit = async () => {
+    if (!phone.trim() || phone.trim().length < 10) {
+      setError('Please enter a valid phone number');
+      return;
+    }
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Prefer': 'return=minimal',
+        },
+        body: JSON.stringify({ phone: phone.trim(), name: name.trim() || null, source: 'landing_page' }),
+      });
+      if (res.ok || res.status === 201) {
+        setSubmitted(true);
+      } else {
+        const data = await res.json().catch(() => null);
+        if (data?.code === '23505') {
+          setSubmitted(true); // Already registered
+        } else {
+          setError('Something went wrong. Please try again.');
+        }
+      }
+    } catch {
+      setError('Network error. Please try again.');
+    }
+    setLoading(false);
+  };
+
+  return (
+    <div style={modalStyles.overlay} onClick={onClose}>
+      <div style={modalStyles.modal} onClick={(e) => e.stopPropagation()}>
+        {submitted ? (
+          <>
+            <div style={modalStyles.checkmark}>&#x2705;</div>
+            <h3 style={modalStyles.title}>You{"'"}re on the list!</h3>
+            <p style={modalStyles.subtitle}>
+              We{"'"}ll notify you as soon as VidyaSutra is available on the Play Store.
+            </p>
+            <button style={modalStyles.closeBtn} onClick={onClose}>Close</button>
+          </>
+        ) : (
+          <>
+            <img src="/coin.png" alt="VidyaSutra" style={modalStyles.coin} />
+            <h3 style={modalStyles.title}>Coming Soon on Play Store</h3>
+            <p style={modalStyles.subtitle}>
+              VidyaSutra Android app is launching soon. Share your number and
+              we{"'"}ll notify you the moment it{"'"}s live.
+            </p>
+            <input
+              type="text"
+              placeholder="Your name (optional)"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              style={modalStyles.input}
+            />
+            <input
+              type="tel"
+              placeholder="Phone number (e.g., +91 98765 43210)"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              style={modalStyles.input}
+            />
+            {error && <p style={modalStyles.error}>{error}</p>}
+            <button
+              style={modalStyles.submitBtn}
+              onClick={handleSubmit}
+              disabled={loading}
+            >
+              {loading ? 'Submitting...' : 'Notify Me'}
+            </button>
+            <p style={modalStyles.privacy}>
+              We{"'"}ll only use this to notify you about the app launch. No spam.
+            </p>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+const modalStyles: Record<string, React.CSSProperties> = {
+  overlay: { position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999, padding: 20 },
+  modal: { backgroundColor: '#1A0E05', border: '2px solid #D4A843', borderRadius: 16, padding: 32, maxWidth: 420, width: '100%', textAlign: 'center' },
+  coin: { width: 80, height: 80, borderRadius: 40, objectFit: 'cover' as const, marginBottom: 16 },
+  checkmark: { fontSize: 48, marginBottom: 12 },
+  title: { fontSize: 22, fontWeight: 700, color: '#FFFFFF', fontFamily: "'Cormorant Garamond', serif", margin: '0 0 8px', letterSpacing: 1 },
+  subtitle: { fontSize: 14, color: 'rgba(232,213,176,0.6)', lineHeight: 1.6, marginBottom: 20 },
+  input: { width: '100%', padding: '12px 16px', backgroundColor: '#2C1608', border: '1px solid rgba(212,168,67,0.25)', borderRadius: 8, color: '#E8D5B0', fontSize: 15, marginBottom: 12, outline: 'none', boxSizing: 'border-box' as const },
+  error: { fontSize: 13, color: '#EF5350', margin: '0 0 12px' },
+  submitBtn: { width: '100%', padding: '14px', backgroundColor: '#D4A843', color: '#1A0E05', border: 'none', borderRadius: 8, fontWeight: 700, fontSize: 16, cursor: 'pointer' },
+  closeBtn: { padding: '12px 32px', backgroundColor: 'transparent', color: '#D4A843', border: '1px solid rgba(212,168,67,0.3)', borderRadius: 8, fontWeight: 600, fontSize: 14, cursor: 'pointer', marginTop: 16 },
+  privacy: { fontSize: 11, color: 'rgba(232,213,176,0.3)', marginTop: 12 },
+};
 
 export default function LandingPage() {
+  const [showWaitlist, setShowWaitlist] = useState(false);
+
+  const handleDownloadClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowWaitlist(true);
+  };
+
   return (
     <div style={styles.page}>
       {/* Hero Section */}
@@ -21,7 +142,7 @@ export default function LandingPage() {
         </div>
         <nav style={styles.nav}>
           <span style={styles.navLogo}>VidyaSutra</span>
-          <a href={PLAY_STORE_URL} style={styles.navCta}>Download App</a>
+          <a href="#" onClick={handleDownloadClick} style={styles.navCta}>Download App</a>
         </nav>
 
         <div style={styles.heroContent}>
@@ -41,7 +162,7 @@ export default function LandingPage() {
             <p style={styles.heroTakshashilaSub}>2,300 years of strategic wisdom. Now in your pocket.</p>
 
             <div style={styles.heroCtas}>
-              <a href={PLAY_STORE_URL} style={styles.primaryCta}>Get VidyaSutra Free</a>
+              <a href="#" onClick={handleDownloadClick} style={styles.primaryCta}>Get VidyaSutra Free</a>
               <a href="#how-it-works" style={styles.secondaryCta}>See how it works</a>
             </div>
 
@@ -148,7 +269,7 @@ export default function LandingPage() {
                     <li key={f} style={styles.featureItem}>{f}</li>
                   ))}
                 </ul>
-                <a href={PLAY_STORE_URL} style={tier.highlight ? styles.pricingCtaGold : styles.pricingCta}>
+                <a href="#" onClick={handleDownloadClick} style={tier.highlight ? styles.pricingCtaGold : styles.pricingCta}>
                   {tier.price === 'Free' ? 'Start Free' : 'Coming Soon'}
                 </a>
               </div>
@@ -167,7 +288,7 @@ export default function LandingPage() {
               <div style={styles.instantSutraRight}>
                 <span style={styles.instantSutraPrice}>&#x20B9;59</span>
                 <span style={styles.instantSutraPeriod}>/query</span>
-                <a href={PLAY_STORE_URL} style={styles.instantSutraCta}>Try Now</a>
+                <a href="#" onClick={handleDownloadClick} style={styles.instantSutraCta}>Try Now</a>
               </div>
             </div>
           </div>
@@ -177,7 +298,7 @@ export default function LandingPage() {
       {/* Final CTA before footer */}
       <section style={styles.ctaSection}>
         <div style={styles.container}>
-          <a href={PLAY_STORE_URL} style={styles.ctaButton}>Download VidyaSutra Free</a>
+          <a href="#" onClick={handleDownloadClick} style={styles.ctaButton}>Download VidyaSutra Free</a>
         </div>
       </section>
 
@@ -194,7 +315,7 @@ export default function LandingPage() {
             <div>
               <h4 style={styles.footerHeading}>Product</h4>
               <a href="#how-it-works" style={styles.footerLink}>How it works</a>
-              <a href={PLAY_STORE_URL} style={styles.footerLink}>Download</a>
+              <a href="#" onClick={handleDownloadClick} style={styles.footerLink}>Download</a>
               <a href="/privacy" style={styles.footerLink}>Privacy Policy</a>
               <a href="/terms" style={styles.footerLink}>Terms of Service</a>
             </div>
@@ -209,6 +330,9 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
+
+      {/* Waitlist Modal */}
+      <WaitlistModal open={showWaitlist} onClose={() => setShowWaitlist(false)} />
     </div>
   );
 }

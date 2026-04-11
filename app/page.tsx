@@ -7,8 +7,7 @@
 import { useState } from 'react';
 
 const PLAY_STORE_URL = '#';
-const SUPABASE_URL = 'https://dvxgukuvtfbhqwuphwwm.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2eGd1a3V2dGZiaHF3dXBod3dtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMxNTM1NzcsImV4cCI6MjA1ODcyOTU3N30.n1C7W7TYgN2cFPsmFDffD3QbTCibFq2vt6kzEEgKuLo';
+const API_URL = 'https://vidyasutra-api.onrender.com';
 
 function WaitlistModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [phone, setPhone] = useState('');
@@ -27,25 +26,19 @@ function WaitlistModal({ open, onClose }: { open: boolean; onClose: () => void }
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+      const res = await fetch(`${API_URL}/api/waitlist`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({ phone: phone.trim(), name: name.trim() || null, source: 'landing_page' }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: phone.trim(), name: name.trim() || null }),
       });
-      if (res.ok || res.status === 201 || res.status === 204) {
+      const data = await res.json().catch(() => null);
+      if (res.ok || data?.success) {
+        setSubmitted(true);
+      } else if (data?.code === 'already_registered') {
         setSubmitted(true);
       } else {
-        const text = await res.text().catch(() => '');
-        if (text.includes('23505') || text.includes('duplicate')) {
-          setSubmitted(true); // Already registered
-        } else {
-          console.error('Waitlist error:', res.status, text);
-          setError('Something went wrong. Please try again.');
-        }
+        console.error('Waitlist error:', res.status, data);
+        setError('Something went wrong. Please try again.');
       }
     } catch {
       setError('Network error. Please try again.');

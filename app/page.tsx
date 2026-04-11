@@ -33,17 +33,17 @@ function WaitlistModal({ open, onClose }: { open: boolean; onClose: () => void }
           'Content-Type': 'application/json',
           'apikey': SUPABASE_ANON_KEY,
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Prefer': 'return=minimal',
         },
         body: JSON.stringify({ phone: phone.trim(), name: name.trim() || null, source: 'landing_page' }),
       });
-      if (res.ok || res.status === 201) {
+      if (res.ok || res.status === 201 || res.status === 204) {
         setSubmitted(true);
       } else {
-        const data = await res.json().catch(() => null);
-        if (data?.code === '23505') {
+        const text = await res.text().catch(() => '');
+        if (text.includes('23505') || text.includes('duplicate')) {
           setSubmitted(true); // Already registered
         } else {
+          console.error('Waitlist error:', res.status, text);
           setError('Something went wrong. Please try again.');
         }
       }
@@ -70,19 +70,19 @@ function WaitlistModal({ open, onClose }: { open: boolean; onClose: () => void }
             <img src="/coin.png" alt="VidyaSutra" style={modalStyles.coin} />
             <h3 style={modalStyles.title}>Coming Soon on Play Store</h3>
             <p style={modalStyles.subtitle}>
-              VidyaSutra Android app is launching soon. Share your number and
+              VidyaSutra Android app is launching soon. Share your WhatsApp number and
               we{"'"}ll notify you the moment it{"'"}s live.
             </p>
             <input
               type="text"
-              placeholder="Your name (optional)"
+              placeholder="Your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               style={modalStyles.input}
             />
             <input
               type="tel"
-              placeholder="Phone number (e.g., +91 98765 43210)"
+              placeholder="WhatsApp number (e.g., +91 98765 43210)"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               style={modalStyles.input}

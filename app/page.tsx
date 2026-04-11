@@ -128,6 +128,10 @@ export default function LandingPage() {
         <div style={styles.topBar}>
           <span style={styles.topBarCompany}>NiyamKavach AI Labs Pvt Ltd</span>
           <div style={styles.topBarRight}>
+            <a href="https://www.instagram.com/vidyasutra2k26/" target="_blank" rel="noopener noreferrer" style={styles.topBarInsta}>
+              <span style={styles.instaIcon}>&#x1F4F7;</span> Follow us on Instagram
+            </a>
+            <span style={styles.topBarSpacer} />
             <span style={styles.topBarBadge}><span className="pulse-emoji">&#x2764;&#xFE0F;</span> Made in Namma Bengaluru</span>
             <span style={styles.topBarSpacer} />
             <span style={styles.topBarBadge}><span className="pulse-emoji">&#x1F4AA;</span> Made for Vikasit Bharat</span>
@@ -315,6 +319,7 @@ export default function LandingPage() {
             <div>
               <h4 style={styles.footerHeading}>Contact</h4>
               <a href="mailto:vyas4c3@gmail.com" style={styles.footerLink}>vyas4c3@gmail.com</a>
+              <a href="https://www.instagram.com/vidyasutra2k26/" target="_blank" rel="noopener noreferrer" style={styles.footerLink}>Instagram @vidyasutra2k26</a>
               <p style={styles.footerCompany}>Founded by Vedavyas Vayalpadu</p>
             </div>
           </div>
@@ -338,6 +343,8 @@ const styles: Record<string, React.CSSProperties> = {
   topBarRight: { display: 'flex', gap: 24, alignItems: 'center' },
   topBarSpacer: { width: 1, height: 12, backgroundColor: 'rgba(212,168,67,0.2)' },
   topBarBadge: { fontSize: 11, color: 'rgba(232,213,176,0.5)', letterSpacing: 0.5 },
+  topBarInsta: { fontSize: 11, color: '#D4A843', textDecoration: 'none', letterSpacing: 0.5, fontWeight: 600 },
+  instaIcon: { fontSize: 13 },
   nav: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 40px', maxWidth: 1200, margin: '0 auto' },
   navLogo: { fontSize: 24, fontWeight: 700, color: '#D4A843', fontFamily: "'Cormorant Garamond', serif", letterSpacing: 2 },
   navCta: { padding: '10px 24px', backgroundColor: '#D4A843', color: '#1A0E05', borderRadius: 8, fontWeight: 700, textDecoration: 'none', fontSize: 14 },

@@ -129,10 +129,10 @@ export default function LandingPage() {
           <p style={styles.sectionSubtitle}>Named after roles in the ancient Indian court</p>
           <div style={styles.pricingGrid}>
             {[
-              { name: 'The Shishya', label: 'Student', price: 'Free', period: '', coin: null, features: ['10 queries/day', 'Daily Chanakya Niti', 'Basic frameworks'], highlight: false },
-              { name: 'The Amatya', label: 'Minister', price: '\u20B9149', period: '/month', coin: '/coin-copper.png', features: ['Unlimited queries', 'All frameworks', 'Sanskrit source view', 'Bookmark & export'], highlight: true },
-              { name: 'The Nayaka', label: 'Leader', price: '\u20B9499', period: '/6 months', coin: '/coin-silver.png', features: ['Everything in Amatya', 'Save 44%', 'Priority support'], highlight: false },
-              { name: 'The Chakravartin', label: 'Emperor', price: '\u20B9899', period: '/year', coin: '/coin-gold.png', features: ['Everything in Nayaka', 'Save 50%', 'All future modules', 'Best value'], highlight: false },
+              { name: 'The Shishya', label: 'Student', price: 'Free', period: '', coin: null, features: ['10 queries/day', 'Daily Chanakya Niti', 'Basic frameworks', 'Multi-language support'], highlight: false },
+              { name: 'The Amatya', label: 'Minister', price: '\u20B9149', period: '/month', coin: '/coin-copper.png', features: ['30 queries/day', 'All frameworks', 'Sanskrit source view', 'Bookmark & export'], highlight: true },
+              { name: 'The Nayaka', label: 'Leader', price: '\u20B9499', period: '/6 months', coin: '/coin-silver.png', features: ['50 queries/day', 'Everything in Amatya', 'Save 44%', 'Priority support'], highlight: false },
+              { name: 'The Chakravartin', label: 'Emperor', price: '\u20B9899', period: '/year', coin: '/coin-gold.png', features: ['75 queries/day', 'Everything in Nayaka', 'All future modules', 'Best value'], highlight: false },
             ].map((tier) => (
               <div key={tier.name} style={{ ...styles.pricingCard, ...(tier.highlight ? styles.pricingHighlight : {}) }}>
                 {tier.highlight && <span style={styles.popularBadge}>MOST POPULAR</span>}
@@ -154,9 +154,23 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
-          <p style={styles.instantSutra}>
-            Need just one answer? <strong>Instant Sutra &mdash; &#x20B9;59/query</strong>. One strategic answer, right now.
-          </p>
+          {/* Instant Power Sutra */}
+          <div style={styles.instantSutraCard}>
+            <div style={styles.instantSutraInner}>
+              <div>
+                <h3 style={styles.instantSutraTitle}>&#x26A1; Instant Power Sutra</h3>
+                <p style={styles.instantSutraDesc}>
+                  Need a deeper, premium analysis? Powered by our most advanced AI model.
+                  One strategic answer with maximum depth &mdash; right now.
+                </p>
+              </div>
+              <div style={styles.instantSutraRight}>
+                <span style={styles.instantSutraPrice}>&#x20B9;59</span>
+                <span style={styles.instantSutraPeriod}>/query</span>
+                <a href={PLAY_STORE_URL} style={styles.instantSutraCta}>Try Now</a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -265,6 +279,14 @@ const styles: Record<string, React.CSSProperties> = {
   pricingCtaGold: { display: 'inline-block', padding: '12px 32px', backgroundColor: '#D4A843', color: '#1A0E05', borderRadius: 8, fontWeight: 700, textDecoration: 'none', fontSize: 14 },
   pricingCta: { display: 'inline-block', padding: '12px 32px', border: '1px solid rgba(212,168,67,0.3)', color: '#D4A843', borderRadius: 8, fontWeight: 600, textDecoration: 'none', fontSize: 14 },
   instantSutra: { textAlign: 'center', fontSize: 15, color: 'rgba(232,213,176,0.5)', marginTop: 32 },
+  instantSutraCard: { marginTop: 32, padding: 2, borderRadius: 16, background: 'linear-gradient(135deg, #D4A843, #8A5020, #D4A843)' },
+  instantSutraInner: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, padding: '24px 28px', backgroundColor: '#1A0E05', borderRadius: 14, flexWrap: 'wrap' as const },
+  instantSutraTitle: { fontSize: 22, fontWeight: 700, color: '#D4A843', fontFamily: "'Cormorant Garamond', serif", margin: '0 0 8px', letterSpacing: 1 },
+  instantSutraDesc: { fontSize: 14, color: 'rgba(232,213,176,0.6)', lineHeight: 1.6, maxWidth: 550, margin: 0 },
+  instantSutraRight: { textAlign: 'center' as const, minWidth: 120 },
+  instantSutraPrice: { fontSize: 42, fontWeight: 900, color: '#D4A843' },
+  instantSutraPeriod: { fontSize: 14, color: 'rgba(232,213,176,0.5)' },
+  instantSutraCta: { display: 'inline-block', marginTop: 12, padding: '10px 28px', backgroundColor: '#D4A843', color: '#1A0E05', borderRadius: 8, fontWeight: 700, textDecoration: 'none', fontSize: 14 },
 
   modulesGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 },
   moduleCard: { padding: 20, backgroundColor: 'rgba(44,22,8,0.5)', border: '1px solid rgba(212,168,67,0.1)', borderRadius: 12 },

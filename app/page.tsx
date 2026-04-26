@@ -248,7 +248,7 @@ export default function LandingPage() {
           <p style={styles.sectionSubtitle}>Named after roles in the ancient Indian court</p>
           <div style={styles.pricingGrid}>
             {[
-              { name: 'The Shishya', label: 'Student', price: 'Free', period: '', coin: null, features: ['10 queries/day', 'Daily Chanakya Niti', 'Basic frameworks', 'Multi-language support'], highlight: false },
+              { name: 'The Shishya', label: 'Student', price: 'Free', period: '', coin: '/coin-brass.png', features: ['10 queries/day', 'Daily Chanakya Niti', 'Basic frameworks', 'Multi-language support'], highlight: false },
               { name: 'The Amatya', label: 'Minister', price: '\u20B9149', period: '/month', coin: '/coin-copper.png', features: ['30 queries/day', 'All frameworks', 'Sanskrit source view', 'Bookmark & export'], highlight: true },
               { name: 'The Nayaka', label: 'Leader', price: '\u20B9499', period: '/6 months', coin: '/coin-silver.png', features: ['50 queries/day', 'Everything in Amatya', 'Save 44%', 'Priority support'], highlight: false },
               { name: 'The Chakravartin', label: 'Emperor', price: '\u20B9899', period: '/year', coin: '/coin-gold.png', features: ['75 queries/day', 'Everything in Nayaka', 'All future modules', 'Best value'], highlight: false },

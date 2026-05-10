@@ -1,10 +1,18 @@
 /**
- * ENH-VS-044 — Twitter / X share preview image.
+ * ENH-VS-044 — Twitter / X share preview image (1200×630).
  *
- * Twitter's `summary_large_image` card requires the same 1200×630 dimensions
- * as Open Graph. Re-uses the OG renderer for visual consistency — sharing the
- * landing on Twitter or LinkedIn produces an identical card.
- *
- * Next.js 15 picks this file up automatically.
+ * Twitter `summary_large_image` cards use the same dimensions as Open Graph,
+ * so we render the same content. Metadata exports are declared inline (NOT
+ * re-exported from opengraph-image) because Next.js's static analyzer can't
+ * follow re-exports for these special config exports.
  */
-export { default, runtime, alt, size, contentType } from './opengraph-image';
+import OpengraphImage from './opengraph-image';
+
+export const runtime = 'edge';
+export const alt = 'VidyaSutra — Ancient Intelligence. Modern Application.';
+export const size = { width: 1200, height: 630 };
+export const contentType = 'image/png';
+
+export default async function TwitterImage() {
+  return OpengraphImage();
+}

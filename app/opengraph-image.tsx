@@ -2,16 +2,19 @@
  * ENH-VS-044 — Open Graph / Facebook / LinkedIn / WhatsApp / Slack / iMessage
  *               share preview image (1200×630 px).
  *
- * Now uses the REAL VS_Gold trademarked coin and REAL Cormorant Garamond
- * (Bold Italic 700) to match the live landing-page hero exactly.
+ * Uses the REAL VS_Gold trademarked coin and REAL Cormorant Garamond
+ * (Bold Italic 700) + Inter SemiBold to match the live landing-page hero exactly.
  *
  * Generated at edge runtime via @vercel/og (built into Next 15 as `next/og`).
+ *
+ * Fonts are bundled in `app/fonts/` as TTF (NOT woff2 — Satori's font parser
+ * inside this Next 15 build doesn't support woff2). Downloaded from Google Fonts
+ * with the default User-Agent (which returns TTF format URLs).
  *
  * To replace with a Canva-designed PNG later:
  *   1. Export 1200×630 PNG from Canva
  *   2. Save as `apps/landing/app/opengraph-image.png`
- *   3. Delete this .tsx file
- *   Next will auto-pick the static PNG. No code changes needed.
+ *   3. Delete this .tsx file (Next will auto-pick the static PNG)
  */
 import { ImageResponse } from 'next/og';
 
@@ -24,40 +27,17 @@ export const contentType = 'image/png';
 // SITE_URL to the new domain and re-deploy. All future shares pick it up.
 const SITE_URL = 'https://landing-pi-nine-71.vercel.app';
 
-/**
- * Fetch a Google Font file at edge runtime. The Mozilla User-Agent ensures
- * Google Fonts returns woff2 (modern browsers); without it the API serves
- * older formats which Satori may or may not handle.
- */
-async function loadGoogleFont(
-  family: string,
-  weight: number,
-  italic = false,
-): Promise<ArrayBuffer> {
-  const familyParam = family.replace(/ /g, '+');
-  const cssUrl = `https://fonts.googleapis.com/css2?family=${familyParam}:ital,wght@${italic ? 1 : 0},${weight}&display=swap`;
-  const css = await (
-    await fetch(cssUrl, {
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36',
-      },
-    })
-  ).text();
-  const fontUrl = css.match(/src:\s*url\((https:\/\/[^)]+)\)/)?.[1];
-  if (!fontUrl) {
-    throw new Error(`Could not extract font URL for ${family} ${weight}${italic ? ' italic' : ''}`);
-  }
-  const res = await fetch(fontUrl);
-  if (!res.ok) throw new Error(`Failed to fetch font ${family}: ${res.status}`);
-  return await res.arrayBuffer();
-}
-
 export default async function OpengraphImage() {
-  // Cormorant Garamond Bold Italic 700 — matches the landing-page wordmark
-  const cormorantBoldItalic = await loadGoogleFont('Cormorant Garamond', 700, true);
-  // Inter 600 for tagline / sub-tagline — clean modern serif/sans pairing
-  const inter600 = await loadGoogleFont('Inter', 600);
+  // Load TTF fonts bundled in app/fonts/ — Satori-compatible format.
+  // import.meta.url resolves at edge runtime so these fetches work.
+  const [cormorantBoldItalic, interSemiBold] = await Promise.all([
+    fetch(new URL('./fonts/CormorantGaramond-BoldItalic.ttf', import.meta.url)).then(
+      (r) => r.arrayBuffer(),
+    ),
+    fetch(new URL('./fonts/Inter-SemiBold.ttf', import.meta.url)).then((r) =>
+      r.arrayBuffer(),
+    ),
+  ]);
 
   return new ImageResponse(
     (
@@ -237,7 +217,7 @@ export default async function OpengraphImage() {
         },
         {
           name: 'Inter',
-          data: inter600,
+          data: interSemiBold,
           style: 'normal',
           weight: 600,
         },

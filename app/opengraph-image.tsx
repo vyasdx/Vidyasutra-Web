@@ -23,9 +23,9 @@ export const alt = 'VidyaSutra — Ancient Intelligence. Modern Application.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-// When the custom domain (vidyasutra.co.in) ships per ENH-VS-002, just bump
-// SITE_URL to the new domain and re-deploy. All future shares pick it up.
-const SITE_URL = 'https://landing-pi-nine-71.vercel.app';
+// Custom domain live since 2026-05-09 (DEC-VS-016). Used to fetch the
+// `/coin.png` asset at edge runtime when generating the OG image.
+const SITE_URL = 'https://www.vidyasutra.co.in';
 
 export default async function OpengraphImage() {
   // Load TTF fonts bundled in app/fonts/ — Satori-compatible format.

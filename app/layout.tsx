@@ -4,10 +4,10 @@ import './globals.css';
 // ENH-VS-044 — comprehensive OG + Twitter card metadata so shares on
 // WhatsApp / LinkedIn / X / Slack / iMessage / Facebook render rich previews.
 //
-// The landing currently lives at landing-pi-nine-71.vercel.app. When the
-// custom domain (vidyasutra.co.in) is mapped to Vercel (ENH-VS-002), update
-// SITE_URL below and re-deploy — every preview card will pick up the new domain.
-const SITE_URL = 'https://landing-pi-nine-71.vercel.app';
+// Custom domain went live 2026-05-09 (DEC-VS-016). www.vidyasutra.co.in is the
+// canonical URL; the Vercel preview URL (landing-pi-nine-71.vercel.app) still
+// works as a fallback.
+const SITE_URL = 'https://www.vidyasutra.co.in';
 
 const TITLE = 'VidyaSutra — Ancient Intelligence. Modern Application.';
 const DESCRIPTION =

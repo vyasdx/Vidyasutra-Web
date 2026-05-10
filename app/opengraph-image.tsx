@@ -2,7 +2,9 @@
  * ENH-VS-044 — Open Graph / Facebook / LinkedIn / WhatsApp / Slack / iMessage
  *               share preview image (1200×630 px).
  *
- * Next.js 15 picks this file up automatically — no manifest changes required.
+ * Now uses the REAL VS_Gold trademarked coin and REAL Cormorant Garamond
+ * (Bold Italic 700) to match the live landing-page hero exactly.
+ *
  * Generated at edge runtime via @vercel/og (built into Next 15 as `next/og`).
  *
  * To replace with a Canva-designed PNG later:
@@ -18,7 +20,45 @@ export const alt = 'VidyaSutra — Ancient Intelligence. Modern Application.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
+// When the custom domain (vidyasutra.co.in) ships per ENH-VS-002, just bump
+// SITE_URL to the new domain and re-deploy. All future shares pick it up.
+const SITE_URL = 'https://landing-pi-nine-71.vercel.app';
+
+/**
+ * Fetch a Google Font file at edge runtime. The Mozilla User-Agent ensures
+ * Google Fonts returns woff2 (modern browsers); without it the API serves
+ * older formats which Satori may or may not handle.
+ */
+async function loadGoogleFont(
+  family: string,
+  weight: number,
+  italic = false,
+): Promise<ArrayBuffer> {
+  const familyParam = family.replace(/ /g, '+');
+  const cssUrl = `https://fonts.googleapis.com/css2?family=${familyParam}:ital,wght@${italic ? 1 : 0},${weight}&display=swap`;
+  const css = await (
+    await fetch(cssUrl, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36',
+      },
+    })
+  ).text();
+  const fontUrl = css.match(/src:\s*url\((https:\/\/[^)]+)\)/)?.[1];
+  if (!fontUrl) {
+    throw new Error(`Could not extract font URL for ${family} ${weight}${italic ? ' italic' : ''}`);
+  }
+  const res = await fetch(fontUrl);
+  if (!res.ok) throw new Error(`Failed to fetch font ${family}: ${res.status}`);
+  return await res.arrayBuffer();
+}
+
 export default async function OpengraphImage() {
+  // Cormorant Garamond Bold Italic 700 — matches the landing-page wordmark
+  const cormorantBoldItalic = await loadGoogleFont('Cormorant Garamond', 700, true);
+  // Inter 600 for tagline / sub-tagline — clean modern serif/sans pairing
+  const inter600 = await loadGoogleFont('Inter', 600);
+
   return new ImageResponse(
     (
       <div
@@ -29,7 +69,7 @@ export default async function OpengraphImage() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'linear-gradient(135deg, #1A0E05 0%, #2A1810 100%)',
+          background: 'linear-gradient(135deg, #1A0E05 0%, #2A1810 50%, #1A0E05 100%)',
           padding: '60px',
           position: 'relative',
         }}
@@ -47,16 +87,17 @@ export default async function OpengraphImage() {
           }}
         />
 
-        {/* Top corner Sanskrit accent */}
+        {/* Top-left Sanskrit accent */}
         <div
           style={{
             position: 'absolute',
             top: 64,
             left: 64,
-            color: 'rgba(212, 168, 67, 0.35)',
+            color: 'rgba(212, 168, 67, 0.4)',
             fontSize: 18,
             letterSpacing: 6,
             display: 'flex',
+            fontFamily: 'Inter',
           }}
         >
           अर्थशास्त्रम्
@@ -69,54 +110,41 @@ export default async function OpengraphImage() {
             top: 64,
             right: 64,
             color: 'rgba(212, 168, 67, 0.6)',
-            fontSize: 14,
+            fontSize: 13,
             letterSpacing: 4,
             fontWeight: 600,
+            fontFamily: 'Inter',
             display: 'flex',
           }}
         >
           NIYAMKAVACH AI LABS
         </div>
 
-        {/* Coin-like circle (no image, pure CSS) */}
-        <div
+        {/* Real VS_Gold trademarked coin (the seated Chanakya figure) */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={`${SITE_URL}/coin.png`}
+          width={150}
+          height={150}
+          alt="VidyaSutra coin"
           style={{
-            width: 140,
-            height: 140,
-            borderRadius: 70,
-            border: '2px solid #D4A843',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'rgba(212, 168, 67, 0.08)',
-            marginBottom: 36,
+            borderRadius: 75,
+            marginBottom: 28,
           }}
-        >
-          <div
-            style={{
-              fontSize: 56,
-              color: '#D4A843',
-              fontWeight: 700,
-              fontStyle: 'italic',
-              fontFamily: 'Georgia, serif',
-              display: 'flex',
-            }}
-          >
-            VS
-          </div>
-        </div>
+        />
 
-        {/* Wordmark */}
+        {/* Wordmark — real Cormorant Garamond Bold Italic */}
         <div
           style={{
-            fontSize: 88,
+            fontSize: 92,
             color: '#D4A843',
+            fontFamily: 'Cormorant Garamond',
             fontStyle: 'italic',
-            fontFamily: 'Georgia, serif',
-            letterSpacing: 3,
             fontWeight: 700,
-            marginBottom: 12,
+            letterSpacing: 2,
+            marginBottom: 8,
             display: 'flex',
+            lineHeight: 1.1,
           }}
         >
           VidyaSutra
@@ -128,7 +156,8 @@ export default async function OpengraphImage() {
             width: 80,
             height: 2,
             background: 'rgba(212, 168, 67, 0.4)',
-            marginBottom: 22,
+            marginTop: 4,
+            marginBottom: 18,
           }}
         />
 
@@ -137,10 +166,11 @@ export default async function OpengraphImage() {
           style={{
             fontSize: 26,
             color: 'rgba(255, 255, 255, 0.92)',
+            fontFamily: 'Inter',
             fontWeight: 600,
-            letterSpacing: 2,
+            letterSpacing: 1.5,
+            marginBottom: 14,
             display: 'flex',
-            marginBottom: 16,
           }}
         >
           Ancient Intelligence. Modern Application.
@@ -149,11 +179,12 @@ export default async function OpengraphImage() {
         {/* Sub-tagline */}
         <div
           style={{
-            fontSize: 18,
-            color: 'rgba(255, 255, 255, 0.65)',
+            fontSize: 17,
+            color: 'rgba(255, 255, 255, 0.7)',
+            fontFamily: 'Inter',
             textAlign: 'center',
             maxWidth: 880,
-            lineHeight: 1.45,
+            lineHeight: 1.5,
             display: 'flex',
           }}
         >
@@ -168,6 +199,7 @@ export default async function OpengraphImage() {
             right: 64,
             color: '#D4A843',
             fontSize: 16,
+            fontFamily: 'Inter',
             fontWeight: 600,
             letterSpacing: 1.5,
             display: 'flex',
@@ -183,7 +215,8 @@ export default async function OpengraphImage() {
             bottom: 64,
             left: 64,
             color: 'rgba(212, 168, 67, 0.55)',
-            fontSize: 14,
+            fontSize: 13,
+            fontFamily: 'Inter',
             letterSpacing: 3,
             fontWeight: 500,
             display: 'flex',
@@ -195,6 +228,20 @@ export default async function OpengraphImage() {
     ),
     {
       ...size,
+      fonts: [
+        {
+          name: 'Cormorant Garamond',
+          data: cormorantBoldItalic,
+          style: 'italic',
+          weight: 700,
+        },
+        {
+          name: 'Inter',
+          data: inter600,
+          style: 'normal',
+          weight: 600,
+        },
+      ],
     },
   );
 }

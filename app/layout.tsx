@@ -1,15 +1,83 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
+// ENH-VS-044 — comprehensive OG + Twitter card metadata so shares on
+// WhatsApp / LinkedIn / X / Slack / iMessage / Facebook render rich previews.
+//
+// The landing currently lives at landing-pi-nine-71.vercel.app. When the
+// custom domain (vidyasutra.co.in) is mapped to Vercel (ENH-VS-002), update
+// SITE_URL below and re-deploy — every preview card will pick up the new domain.
+const SITE_URL = 'https://landing-pi-nine-71.vercel.app';
+
+const TITLE = 'VidyaSutra — Ancient Intelligence. Modern Application.';
+const DESCRIPTION =
+  "AI strategic advisor rooted in Kautilya's Arthashastra. 496 verified Sanskrit shlokas applied to modern career, leadership, and life decisions. Every answer cites the exact verse. Available in English, Hindi, Telugu, Kannada.";
+
 export const metadata: Metadata = {
-  title: 'VidyaSutra — Ancient Intelligence. Modern Application.',
-  description: 'AI-powered strategic advisory mapping Kautilya\'s Arthashastra to modern life decisions. Ask Chanakya anything — negotiation, leadership, career, conflict. Every answer cites the exact verse.',
-  keywords: 'Arthashastra, Chanakya, Kautilya, AI advisor, ancient wisdom, strategy, UPSC ethics, Indian knowledge, VidyaSutra',
-  icons: { icon: '/favicon.png' },
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  keywords: [
+    'Arthashastra',
+    'Chanakya',
+    'Kautilya',
+    'AI advisor',
+    'ancient Indian wisdom',
+    'strategic AI',
+    'UPSC',
+    'leadership AI',
+    'negotiation coach',
+    'Indian knowledge',
+    'VidyaSutra',
+    'NiyamKavach AI Labs',
+    'Sanskrit verses',
+    'decision making AI',
+  ],
+  authors: [{ name: 'Vedavyas Vayalpadu' }],
+  creator: 'Vedavyas Vayalpadu',
+  publisher: 'NiyamKavach AI Labs Private Limited',
+  applicationName: 'VidyaSutra',
+  category: 'Education',
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
+  alternates: {
+    canonical: SITE_URL,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
-    title: 'VidyaSutra — Arthashastra. Ancient Intelligence. Modern Application.',
-    description: 'The playbook kings used. Now in your pocket. 496 verified Arthashastra verses powering AI strategic advice.',
     type: 'website',
+    siteName: 'VidyaSutra',
+    title: TITLE,
+    description: DESCRIPTION,
+    url: SITE_URL,
+    locale: 'en_IN',
+    // images is auto-populated by app/opengraph-image.tsx (Next.js 15 convention)
+    // Explicit images here are unnecessary; Next will inject the generated card.
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: TITLE,
+    description: DESCRIPTION,
+    creator: '@vidyasutra2k26',
+    site: '@vidyasutra2k26',
+    // images auto-populated by app/twitter-image.tsx
+  },
+  other: {
+    // WhatsApp preview hint — uses OG image but some clients ignore size hints
+    'og:image:width': '1200',
+    'og:image:height': '630',
   },
 };
 

@@ -9,9 +9,9 @@ export default function PrivacyPage() {
         <Section title="1. Who We Are">
           VidyaSutra is developed and operated by NiyamKavach AI Labs Private Limited, a company registered in Bengaluru, Karnataka, India (&quot;Company&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;).
           <br /><br />
-          <strong>GSTIN:</strong> 29AALCN4701B1ZO
+          <strong>CIN:</strong> U62011KA2026PTC218229
           <br />
-          <strong>Trademark:</strong> VidyaSutra (with device), Class 9, Application No. 7670101
+          <strong>GSTIN:</strong> 29AALCN4701B1ZO
         </Section>
 
         <Section title="2. Information We Collect">

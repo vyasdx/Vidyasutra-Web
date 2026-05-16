@@ -9,7 +9,7 @@ export default function TermsPage() {
         <Section title="1. Acceptance of Terms">
           By downloading, installing, or using VidyaSutra (&quot;the App&quot;), you agree to these Terms of Service. If you do not agree, do not use the App.
           <br /><br />
-          VidyaSutra is operated by NiyamKavach AI Labs Private Limited, Bengaluru, Karnataka, India. GSTIN: 29AALCN4701B1ZO. Trademark: VidyaSutra (with device), Class 9, Application No. 7670101.
+          VidyaSutra is operated by NiyamKavach AI Labs Private Limited, Bengaluru, Karnataka, India. CIN: U62011KA2026PTC218229. GSTIN: 29AALCN4701B1ZO.
         </Section>
 
         <Section title="2. Description of Service">

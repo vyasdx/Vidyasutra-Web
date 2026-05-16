@@ -326,7 +326,7 @@ export default function LandingPage() {
           </div>
           <div style={styles.footerBottom}>
             <p style={styles.footerCopyright}>&copy; 2026 NiyamKavach AI Labs Pvt Ltd. All rights reserved.</p>
-            <p style={styles.footerLegal}>GSTIN: 29AALCN4701B1ZO &middot; VidyaSutra (with device), Trademark Class 9 &middot; Application No. 7670101</p>
+            <p style={styles.footerLegal}>CIN: U62011KA2026PTC218229 &middot; GSTIN: 29AALCN4701B1ZO</p>
           </div>
         </div>
       </footer>

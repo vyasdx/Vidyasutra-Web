@@ -326,6 +326,7 @@ export default function LandingPage() {
           </div>
           <div style={styles.footerBottom}>
             <p style={styles.footerCopyright}>&copy; 2026 NiyamKavach AI Labs Pvt Ltd. All rights reserved.</p>
+            <p style={styles.footerLegal}>GSTIN: 29AALCN4701B1ZO &middot; VidyaSutra (with device), Trademark Class 9 &middot; Application No. 7670101</p>
           </div>
         </div>
       </footer>
@@ -436,4 +437,5 @@ const styles: Record<string, React.CSSProperties> = {
   footerLink: { display: 'block', fontSize: 13, color: 'rgba(232,213,176,0.4)', textDecoration: 'none', marginBottom: 8 },
   footerBottom: { borderTop: '1px solid rgba(212,168,67,0.08)', paddingTop: 20, textAlign: 'center' },
   footerCopyright: { fontSize: 12, color: 'rgba(232,213,176,0.25)' },
+  footerLegal: { fontSize: 10, color: 'rgba(232,213,176,0.18)', marginTop: 6, letterSpacing: 0.5 },
 };

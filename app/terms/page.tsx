@@ -4,10 +4,12 @@ export default function TermsPage() {
       <div style={{ maxWidth: 800, margin: '0 auto' }}>
         <a href="/" style={{ color: '#D4A843', textDecoration: 'none', fontSize: 14 }}>&larr; Back to VidyaSutra</a>
         <h1 style={{ fontSize: 36, color: '#FFFFFF', fontFamily: "'Cormorant Garamond', serif", marginTop: 24 }}>Terms of Service</h1>
-        <p style={{ color: 'rgba(232,213,176,0.4)', fontSize: 13 }}>Last updated: April 1, 2026</p>
+        <p style={{ color: 'rgba(232,213,176,0.4)', fontSize: 13 }}>Last updated: May 17, 2026</p>
 
         <Section title="1. Acceptance of Terms">
           By downloading, installing, or using VidyaSutra (&quot;the App&quot;), you agree to these Terms of Service. If you do not agree, do not use the App.
+          <br /><br />
+          VidyaSutra is operated by NiyamKavach AI Labs Private Limited, Bengaluru, Karnataka, India. GSTIN: 29AALCN4701B1ZO. Trademark: VidyaSutra (with device), Class 9, Application No. 7670101.
         </Section>
 
         <Section title="2. Description of Service">

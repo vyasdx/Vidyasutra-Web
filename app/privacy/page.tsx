@@ -4,10 +4,14 @@ export default function PrivacyPage() {
       <div style={{ maxWidth: 800, margin: '0 auto' }}>
         <a href="/" style={{ color: '#D4A843', textDecoration: 'none', fontSize: 14 }}>&larr; Back to VidyaSutra</a>
         <h1 style={{ fontSize: 36, color: '#FFFFFF', fontFamily: "'Cormorant Garamond', serif", marginTop: 24 }}>Privacy Policy</h1>
-        <p style={{ color: 'rgba(232,213,176,0.4)', fontSize: 13 }}>Last updated: April 1, 2026</p>
+        <p style={{ color: 'rgba(232,213,176,0.4)', fontSize: 13 }}>Last updated: May 17, 2026</p>
 
         <Section title="1. Who We Are">
           VidyaSutra is developed and operated by NiyamKavach AI Labs Private Limited, a company registered in Bengaluru, Karnataka, India (&quot;Company&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;).
+          <br /><br />
+          <strong>GSTIN:</strong> 29AALCN4701B1ZO
+          <br />
+          <strong>Trademark:</strong> VidyaSutra (with device), Class 9, Application No. 7670101
         </Section>
 
         <Section title="2. Information We Collect">
